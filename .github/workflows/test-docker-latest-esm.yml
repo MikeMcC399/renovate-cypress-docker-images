@@ -1,0 +1,61 @@
+name: Test Docker latest ESM
+on: workflow_dispatch
+jobs:
+  docker-base:
+    runs-on: ubuntu-24.04
+    # from https://hub.docker.com/r/cypress/base/tags
+    defaults:
+      run:
+        shell: bash
+        working-directory: examples/basic-esm
+    container:
+      image: cypress/base:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - run: npm ci
+      - run: npx cypress info
+      - run: npx cypress run
+
+  docker-browsers:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: examples/basic-esm
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    # from https://hub.docker.com/r/cypress/browsers/tags
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - run: npm ci
+      - run: npx cypress info
+      - run: npx cypress run --browser ${{ matrix.browser }}
+
+  docker-included:
+    runs-on: ubuntu-24.04
+    # from https://hub.docker.com/r/cypress/included/tags
+    defaults:
+      run:
+        shell: bash
+        working-directory: examples/basic-esm-no-deps
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    container:
+      image: cypress/included:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - run: npm ci
+      - run: npx cypress info
+      - run: npx cypress run --browser ${{ matrix.browser }}

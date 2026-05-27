@@ -1,0 +1,21 @@
+name: Firefox Tests
+# Testing Firefox variants
+
+on:
+  workflow_dispatch:
+
+jobs:
+  firefox:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [
+            ubuntu-24.04, # testing Linux/amd64 platform
+            ubuntu-24.04-arm, # testing Linux/arm64 platform
+          ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run test script
+        working-directory: factory
+        run: ./scripts/test-firefox.sh
