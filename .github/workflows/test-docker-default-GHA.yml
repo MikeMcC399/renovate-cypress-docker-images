@@ -1,0 +1,60 @@
+name: Test Docker GitHub Actions
+on: workflow_dispatch
+jobs:
+  docker-base:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        #   browser: [chrome, edge, electron, firefox]
+        browser: [electron] # only Electron from Cypress itself is available in base image
+    # from https://hub.docker.com/r/cypress/base/tags
+    container:
+      image: cypress/base:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic
+          browser: ${{ matrix.browser }}
+
+  docker-browsers:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    # from https://hub.docker.com/r/cypress/browsers/tags
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic
+          browser: ${{ matrix.browser }}
+
+  docker-included:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    # from https://hub.docker.com/r/cypress/included/tags
+    container:
+      image: cypress/included:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic-no-deps
+          browser: ${{ matrix.browser }}

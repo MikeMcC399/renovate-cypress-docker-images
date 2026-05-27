@@ -1,0 +1,21 @@
+name: Test Docker Chromium
+on: workflow_dispatch
+jobs:
+  docker-chromium:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: examples/chromium
+    container:
+      image: cypress/base
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - run: uname -m
+      - run: npm ci
+      - run: apt-get update
+      - run: apt-get install chromium -y
+      - run: npx cypress info
+      - run: npx cypress run --browser chromium

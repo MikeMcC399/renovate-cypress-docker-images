@@ -1,0 +1,108 @@
+name: Test Docker GitHub Actions pnpm
+on: workflow_dispatch
+jobs:
+  docker-base:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        #   browser: [chrome, edge, electron, firefox]
+        browser: [electron] # only Electron from Cypress itself is available in base image
+    # from https://hub.docker.com/r/cypress/base/tags
+    container:
+      image: cypress/base:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('examples/basic-pnpm/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm -v
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic-pnpm
+          browser: ${{ matrix.browser }}
+
+  docker-browsers:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    # from https://hub.docker.com/r/cypress/browsers/tags
+    container:
+      image: cypress/browsers:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('examples/basic-pnpm/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm -v
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic-pnpm
+          browser: ${{ matrix.browser }}
+
+  docker-included:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, electron, firefox]
+    # from https://hub.docker.com/r/cypress/included/tags
+    container:
+      image: cypress/included:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('examples/basic-pnpm/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm -v
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic-pnpm-no-deps
+          browser: ${{ matrix.browser }}

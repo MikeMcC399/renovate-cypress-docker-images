@@ -1,0 +1,51 @@
+name: Test ECR GitHub Actions
+# Use images from Amazon ECR Public Gallery
+# https://gallery.ecr.aws/cypress-io
+on: workflow_dispatch
+jobs:
+  ECR-base:
+    runs-on: ubuntu-24.04
+    # from https://gallery.ecr.aws/cypress-io/cypress/base
+    container:
+      image: public.ecr.aws/cypress-io/cypress/base:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic
+
+  ECR-browsers:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge, firefox]
+    # from https://gallery.ecr.aws/cypress-io/cypress/browsers
+    container:
+      image: public.ecr.aws/cypress-io/cypress/browsers:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic
+          browser: ${{ matrix.browser }}
+
+  ECR-included:
+    runs-on: ubuntu-24.04
+    # from https://gallery.ecr.aws/cypress-io/cypress/included
+    container:
+      image: public.ecr.aws/cypress-io/cypress/included:latest
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v4
+      - run: node -v
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npx cypress info
+          working-directory: examples/basic-no-deps

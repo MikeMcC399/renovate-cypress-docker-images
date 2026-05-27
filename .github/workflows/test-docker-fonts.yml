@@ -1,0 +1,9 @@
+name: Test Docker Fonts
+on: workflow_dispatch
+jobs:
+  docker-ubuntu:
+    runs-on: ubuntu-24.04
+    container:
+      image: cypress/included:latest
+    steps:
+      - run: fc-list

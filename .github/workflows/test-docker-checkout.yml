@@ -1,0 +1,23 @@
+name: test-docker-checkout
+on: workflow_dispatch
+jobs:
+  docker-base:
+    runs-on: ubuntu-24.04
+    # from https://hub.docker.com/r/cypress/base/tags
+    container: cypress/base:latest
+    steps:
+      - uses: actions/checkout@v4
+
+  docker-browsers:
+    runs-on: ubuntu-24.04
+    # from https://hub.docker.com/r/cypress/browsers/tags
+    container: cypress/browsers:latest
+    steps:
+      - uses: actions/checkout@v4
+
+  docker-included:
+    runs-on: ubuntu-24.04
+    # from https://hub.docker.com/r/cypress/included/tags
+    container: cypress/included:latest
+    steps:
+      - uses: actions/checkout@v4
