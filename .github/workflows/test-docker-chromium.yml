@@ -11,7 +11,7 @@ jobs:
       image: cypress/base
       options: --user 1001
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: node -v
       - run: uname -m
       - run: npm ci

@@ -15,8 +15,8 @@ jobs:
   lint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.node-version'
           cache: 'npm'
@@ -27,7 +27,7 @@ jobs:
   check-factory-versions:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Load .env
         run: ./load-env.sh
         working-directory: factory
@@ -68,7 +68,7 @@ jobs:
   #         test-browsers-electron, test-browsers-firefox, test-included-electron, test-included-firefox
   #       ]
   #   steps:
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v7
   #     - name: Load .env
   #       run: echo "set -a && . ./factory/.env && set +a" >> $GITHUB_ENV
   #     - name: Build Docker image
@@ -92,7 +92,7 @@ jobs:
   #     matrix:
   #       target: [factory, base, browsers, included]
   #   steps:
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v7
   #     - name: Load .env
   #       run: echo "set -a && . ./factory/.env && set +a" >> $GITHUB_ENV
   #     - name: Login to DockerHub
