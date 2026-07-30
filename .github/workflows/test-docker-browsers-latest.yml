@@ -16,7 +16,7 @@ jobs:
       image: cypress/browsers:latest
       options: --user 1001
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: node -v
       - run: npm ci
       - run: npx cypress info
