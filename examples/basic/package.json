@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "Basic E2E Cypress test example",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress run",
+    "cy:run": "test",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:edge": "cypress run --browser edge",
+    "cy:run:electron": "cypress run --browser electron",
+    "cy:run:firefox": "cypress run --browser firefox"
   },
   "private": true,
   "devDependencies": {
