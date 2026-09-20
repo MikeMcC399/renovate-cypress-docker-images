@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm -v
       - run: node -v
-      - uses: cypress-io/github-action@v7.4.2
+      - uses: cypress-io/github-action@v7.4.3
         with:
           build: npx cypress info
           working-directory: examples/basic-pnpm
@@ -66,7 +66,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm -v
       - run: node -v
-      - uses: cypress-io/github-action@v7.4.2
+      - uses: cypress-io/github-action@v7.4.3
         with:
           build: npx cypress info
           working-directory: examples/basic-pnpm
@@ -101,7 +101,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm -v
       - run: node -v
-      - uses: cypress-io/github-action@v7.4.2
+      - uses: cypress-io/github-action@v7.4.3
         with:
           build: npx cypress info
           working-directory: examples/basic-pnpm-no-deps
