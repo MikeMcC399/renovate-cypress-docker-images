@@ -30,8 +30,7 @@
     },
     {
       "matchUpdateTypes": ["lockFileMaintenance"],
-      "minimumReleaseAge": null,
-      "matchDatasources": ["npm"]
+      "minimumReleaseAge": null
     }
   ]
 }
