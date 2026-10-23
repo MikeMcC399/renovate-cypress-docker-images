@@ -2,7 +2,7 @@ name: Test Docker latest
 on: workflow_dispatch
 jobs:
   docker-base:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # from https://hub.docker.com/r/cypress/base/tags
     defaults:
       run:
@@ -19,7 +19,7 @@ jobs:
       - run: npx cypress run
 
   docker-browsers:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     defaults:
       run:
         shell: bash
@@ -40,7 +40,7 @@ jobs:
       - run: npx cypress run --browser ${{ matrix.browser }}
 
   docker-included:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # from https://hub.docker.com/r/cypress/included/tags
     defaults:
       run:
