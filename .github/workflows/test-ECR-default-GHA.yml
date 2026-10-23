@@ -4,7 +4,7 @@ name: Test ECR GitHub Actions
 on: workflow_dispatch
 jobs:
   ECR-base:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # from https://gallery.ecr.aws/cypress-io/cypress/base
     container:
       image: public.ecr.aws/cypress-io/cypress/base:latest
@@ -18,7 +18,7 @@ jobs:
           working-directory: examples/basic
 
   ECR-browsers:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -37,7 +37,7 @@ jobs:
           browser: ${{ matrix.browser }}
 
   ECR-included:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # from https://gallery.ecr.aws/cypress-io/cypress/included
     container:
       image: public.ecr.aws/cypress-io/cypress/included:latest

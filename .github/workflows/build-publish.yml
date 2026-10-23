@@ -13,7 +13,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -25,7 +25,7 @@ jobs:
       - run: npm run format:check
 
   check-factory-versions:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - name: Load .env
@@ -61,7 +61,7 @@ jobs:
   #   runs-on: ${{ matrix.os }}
   #   strategy:
   #     matrix:
-  #       os: [ubuntu-24.04]
+  #       os: [ubuntu-26.04]
   #       target: [factory, base, browsers, included]
   #       test-target: [
   #         test-factory-electron, test-factory-chrome, test-factory-firefox,
@@ -86,7 +86,7 @@ jobs:
 
   # push:
   #   if: github.ref == 'refs/heads/main'
-  #   runs-on: ubuntu-24.04
+  #   runs-on: ubuntu-26.04
   #   needs: [lint, check-factory-versions, test-image]
   #   strategy:
   #     matrix:
